@@ -47,7 +47,7 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            $user = $this->userService->createUser($request);
+            $user = $this->userService->createUser($request->validated());
             $this->userService->createUserSettingsCategory($user);
 
             DB::commit();
@@ -61,7 +61,7 @@ class UserController extends Controller
             Auth::login($user);
         }
 
-        return $this->sendResponse(message: 'User created successfully.');
+        return $this->sendResponse($request->validated(), __('User created successfully.'));
     }
 
     public function update(UpdateUserRequest $request): JsonResponse

@@ -26,7 +26,7 @@ class UserSettingsCategoryController extends Controller
             }, $settingsCategories);
         }
 
-        return response()->json($userSettingsCategories, 200);
+        return $this->sendResponse($userSettingsCategories);
     }
 
     public function update(Request $request): Response
