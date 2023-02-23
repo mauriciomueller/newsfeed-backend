@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\SettingsCategory;
 use App\Models\SettingsSource;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,10 +16,15 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+    public function __construct(
+        protected UserService $userService
+    )
+    {
+    }
+
     public function getUser(Request $request): JsonResponse
     {
         $userInfo = [];
@@ -28,7 +34,7 @@ class UserController extends Controller
         $userInfo['user']['settings']['categories'] = SettingsCategory::all()->toArray();
         $userInfo['user']['settings']['sources'] = SettingsSource::all()->toArray();
 
-        return response()->json($userInfo, 200);
+        return $this->sendResponse($userInfo);
     }
 
     /**
@@ -41,29 +47,21 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
-
-            $user->userSettingsCategories()->create([
-                'user_id' => $user->id,
-                'settings_categories_codes' => json_encode([])
-            ]);
+            $user = $this->userService->createUser($request);
+            $this->userService->createUserSettingsCategory($user);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->sendError(__('Error while registering user'));
+            return $this->sendError(__('Error while registering user'));
         }
 
-        event(new Registered($user));
+        if(!isset($user)) {
+            event(new Registered($user));
+            Auth::login($user);
+        }
 
-        Auth::login($user);
-
-        return response()->noContent();
+        return $this->sendResponse(message: 'User created successfully.');
     }
 
     public function update(UpdateUserRequest $request): JsonResponse
