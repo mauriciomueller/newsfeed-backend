@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserSettingsCategoryUpdateRequest;
 use App\Models\SettingsCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -9,10 +10,12 @@ use Illuminate\Http\Response;
 
 class UserSettingsCategoryController extends Controller
 {
+
+
     public function show(): JsonResponse
     {
         $userSettingsCategories = [];
-        $user = auth('api')->user();
+        $user = auth('sanctum')->user();
         $userSettingsCategoriesCodes = $user->userSettingsCategories;
         $settingsCategories = SettingsCategory::all()->toArray();
 
@@ -27,13 +30,17 @@ class UserSettingsCategoryController extends Controller
         }
 
         return $this->sendResponse($userSettingsCategories);
+
     }
 
-    public function update(Request $request): Response
+    public function update(UserSettingsCategoryUpdateRequest $request): Response
     {
-        $user = auth('api')->user();
+
+
+        $user = auth('sanctum')->user();
         $user->userSettingsCategories->settings_categories_codes = $request->settings_categories_codes;
         $user->userSettingsCategories->save();
         return response()->noContent();
+
     }
 }
