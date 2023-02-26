@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -13,16 +14,10 @@ class UserService
     {
     }
 
-    public function createUser(array $userData): User
+
+    public function registerUser(array $data): void
     {
-        return $this->userRepository->create($userData);
+        $this->userRepository->registerUser($data);
     }
 
-    public function createUserSettingsCategory(User $user): void
-    {
-        $user->userSettingsCategories()->create([
-            'user_id' => $user->id,
-            'settings_categories_codes' => json_encode([])
-        ]);
-    }
 }

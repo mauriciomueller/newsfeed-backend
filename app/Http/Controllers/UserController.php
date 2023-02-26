@@ -25,6 +25,8 @@ class UserController extends Controller
     {
     }
 
+
+
     public function getUser(Request $request): JsonResponse
     {
         $userInfo = [];
@@ -44,21 +46,10 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request): Response | JsonResponse
     {
-        DB::beginTransaction();
-
         try {
-            $user = $this->userService->createUser($request->validated());
-            $this->userService->createUserSettingsCategory($user);
-
-            DB::commit();
+            $this->userService->registerUser($request->validated());
         } catch (\Exception $e) {
-            DB::rollBack();
-            return $this->sendError(__('Error while registering user'));
-        }
-
-        if(!isset($user)) {
-            event(new Registered($user));
-            Auth::login($user);
+            return $this->sendError(__('Error while registering user'), code: 500);
         }
 
         return $this->sendResponse($request->validated(), __('User created successfully.'));

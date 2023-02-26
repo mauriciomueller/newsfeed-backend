@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedTokenController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\AuthenticatedTokenController;
+use App\Http\Controllers\EmailVerificationNotificationController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\SearchNewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserNewsController;
 use App\Http\Controllers\UserSettingsCategoryController;
+use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 /*
