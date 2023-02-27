@@ -5,6 +5,7 @@ use App\Http\Controllers\EmailVerificationNotificationController;
 use App\Http\Controllers\GetLoggedUserDataController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\PasswordResetLinkController;
+use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SearchNewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserNewsController;
@@ -25,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->middleware('throttle:api')->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::post('/users', [UserController::class, 'store'])->name('register');
-        Route::post('/login', [AuthenticatedTokenController::class, 'store'])->name('login');
+        Route::post('/users', RegisterUserController::class)->name('user.register');
+        Route::post('/login', [AuthenticatedTokenController::class, 'store'])->name('user.login');
         Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
         Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
     });
