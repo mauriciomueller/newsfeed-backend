@@ -22,7 +22,7 @@ class UserSettingsCategoryTest extends TestCase
     public function test_get_categories_for_not_logged_in_users()
     {
         $this->get(route('user.categories.show'))
-            ->assertStatus(403);
+            ->assertStatus(401);
     }
 
     public function test_get_categories_for_logged_in_users()
@@ -38,11 +38,15 @@ class UserSettingsCategoryTest extends TestCase
 
         $this->get(route('user.categories.show'))
             ->assertJsonStructure([
-                '*' => [
-                    'name',
-                    'value',
-                    'isSettingEnabled',
-                ]
+                'success',
+                'result' => [
+                    '*' => [
+                        'name',
+                        'value',
+                        'isSettingEnabled',
+                    ],
+                ],
+                'message',
             ])
             ->assertStatus(200);
     }

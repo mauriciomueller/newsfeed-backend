@@ -3,16 +3,15 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use App\Models\UserSettingsCategory;
 
 class UserSettingsCategoryRepository
 {
-    public function createUserSettingsCategory(User $user): void
+    public function create(User $user): UserSettingsCategory
     {
-        $user->userSettingsCategories()->create([
-            'name' => 'Default',
-            'is_default' => true,
+        return $user->userSettingsCategories()->create([
+            'user_id' => $user->id,
+            'settings_categories_codes' => '[]',
         ]);
     }
 }

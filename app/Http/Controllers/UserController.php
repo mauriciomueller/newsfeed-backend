@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\SettingsCategory;
 use App\Models\SettingsSource;
 use App\Models\User;
-use App\Services\UserService;
+use App\Services\RegisterUserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,39 +20,23 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function __construct(
-        protected UserService $userService
+        protected RegisterUserService $userService
     )
     {
     }
 
 
 
-    public function getUser(Request $request): JsonResponse
-    {
-        $userInfo = [];
 
-        $user = $request->user();
-        $userInfo['user'] = $user->toArray();
-        $userInfo['user']['settings']['categories'] = SettingsCategory::all()->toArray();
-        $userInfo['user']['settings']['sources'] = SettingsSource::all()->toArray();
-
-        return $this->sendResponse($userInfo);
-    }
 
     /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(CreateUserRequest $request): Response | JsonResponse
+    public function store(RegisterUserRequest $request): Response | JsonResponse
     {
-        try {
-            $this->userService->registerUser($request->validated());
-        } catch (\Exception $e) {
-            return $this->sendError(__('Error while registering user'), code: 500);
-        }
 
-        return $this->sendResponse($request->validated(), __('User created successfully.'));
     }
 
     public function update(UpdateUserRequest $request): JsonResponse

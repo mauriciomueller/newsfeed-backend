@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticatedTokenController extends Controller
+class CreateAuthenticationTokenController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function __invoke(LoginRequest $request): JsonResponse
     {
         try {
             $request->authenticate();
@@ -28,14 +27,5 @@ class AuthenticatedTokenController extends Controller
         ];
 
         return $this->sendResponse($data, 'User ' . $user->full_name . ' successfully logged in');
-    }
-
-    /**
-     * Destroy an authenticated session.
-     */
-    public function destroy(Request $request): Response
-    {
-        auth()->user()->currentAccessToken()->delete();
-        return response()->noContent();
     }
 }
