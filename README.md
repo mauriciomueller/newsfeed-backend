@@ -9,6 +9,9 @@
 
 ## How to start the project:
 
+### Get the fronted project here:
+https://github.com/mauriciomueller/newsfeed-frontend
+
 ### Start containers:
 ```
 $ docker-compose up -d
