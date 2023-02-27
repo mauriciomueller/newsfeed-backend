@@ -19,13 +19,13 @@ class UserSettingsCategoryTest extends TestCase
         parent::setUp();
     }
 
-    public function test_get_categories_for_not_logged_in_users()
+    public function test_get_categories_for_not_logged_in_users(): void
     {
         $this->get(route('user.categories.show'))
             ->assertStatus(401);
     }
 
-    public function test_get_categories_for_logged_in_users()
+    public function test_get_categories_for_logged_in_users(): void
     {
         $this->seed([
             UserSeeder::class,

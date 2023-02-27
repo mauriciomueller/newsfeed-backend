@@ -20,7 +20,7 @@ class GetUserTest extends TestCase
             ->assertStatus(401);
     }
 
-    public function test_get_user_data_for_logged_in_users()
+    public function test_get_user_data_for_logged_in_users(): void
     {
         $this->seed([
             UserSeeder::class,
