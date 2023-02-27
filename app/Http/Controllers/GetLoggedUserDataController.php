@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GetUserService;
+use App\Services\GetLoggedUserService;
 use Illuminate\Http\JsonResponse;
 
-class GetUserController extends Controller
+class GetLoggedUserDataController extends Controller
 {
-    public function __invoke(GetUserService $getUserService): JsonResponse
+    public function __invoke(GetLoggedUserService $getUserService): JsonResponse
     {
         $userData = $getUserService->getUserData();
 

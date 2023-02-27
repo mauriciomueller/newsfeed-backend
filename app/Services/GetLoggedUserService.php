@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\SettingsCategory;
 use App\Models\SettingsSource;
 
-class GetUserService
+class GetLoggedUserService
 {
 
     public function getUserData(): array
