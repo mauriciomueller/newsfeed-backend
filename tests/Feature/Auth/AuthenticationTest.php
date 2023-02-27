@@ -14,7 +14,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post(route('login'), [
+        $response = $this->postJson(route('login'), [
             'email' => $user->email,
             'password' => 'password',
         ])->assertJsonStructure([
@@ -33,7 +33,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
+        $this->postJson('/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);

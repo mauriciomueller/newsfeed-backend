@@ -7,23 +7,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
-class PasswordResetLinkController extends Controller
+class UserPasswordResetLinkController extends Controller
 {
-    /**
-     * Handle an incoming password reset link request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(ForgotPasswordRequest $request): JsonResponse
+
+    public function __invoke(ForgotPasswordRequest $request): JsonResponse
     {
         $status = Password::sendResetLink(
             $request->only('email')
         );
 
         if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
+            return $this->sendError('Error sending password reset link.', ['email' => [__($status)]], 422);
         }
 
         return $this->sendResponse(message: __($status));

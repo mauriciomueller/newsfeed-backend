@@ -4,8 +4,9 @@ use App\Http\Controllers\CreateAuthenticationTokenController;
 use App\Http\Controllers\DestroyAuthenticationTokenController;
 use App\Http\Controllers\EmailVerificationNotificationController;
 use App\Http\Controllers\GetLoggedUserDataController;
-use App\Http\Controllers\NewPasswordController;
-use App\Http\Controllers\PasswordResetLinkController;
+use App\Http\Controllers\UpdateUserProfileController;
+use App\Http\Controllers\UserResetPasswordController;
+use App\Http\Controllers\UserPasswordResetLinkController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SearchNewsController;
 use App\Http\Controllers\UserController;
@@ -29,13 +30,13 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::post('/users', RegisterUserController::class)->name('user.register');
         Route::post('/users/login', CreateAuthenticationTokenController::class)->name('user.login');
-        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-        Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+        Route::post('/users/forgot-password', UserPasswordResetLinkController::class)->name('user.forgotPassword');
+        Route::post('/users/reset-password', UserResetPasswordController::class)->name('user.resetPassword');
     });
 
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/user', GetLoggedUserDataController::class)->name('user.get');
-        Route::put('/users', [UserController::class, 'update'])->name('user.update');
+        Route::put('/users', UpdateUserProfileController::class)->name('user.update');
         Route::put('/users/change-password', [UserController::class, 'changePassword'])->name('password.change');
         Route::get('/users/news/', [UserNewsController::class, 'getUserNews'])->name('user.news.getUserNews');
         Route::get('/users/categories', [UserSettingsCategoryController::class, 'show'])->name('user.categories.show');

@@ -36,13 +36,14 @@ class UserNewsTest extends TestCase
         $this->articlesWithCategories[] = 'categories';
     }
 
-    public function test_get_news_for_not_logged_in_users()
+    public function test_get_news_for_not_logged_in_users(): void
     {
         $this->get(route('user.news.getUserNews'))
             ->assertStatus(401);
     }
 
-    public function test_get_news_for_logged_in_users_without_categories_settings() {
+    public function test_get_news_for_logged_in_users_without_categories_settings(): void
+    {
         $user = User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'User',
@@ -70,7 +71,8 @@ class UserNewsTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function test_get_news_for_logged_in_users_with_categories_settings() {
+    public function test_get_news_for_logged_in_users_with_categories_settings(): void
+    {
          $user = User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'User',

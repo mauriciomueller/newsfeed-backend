@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rules;
 
-class NewPasswordRequest extends CustomFormRequest
+class UserResetPasswordRequest extends CustomFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

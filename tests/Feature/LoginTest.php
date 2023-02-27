@@ -11,11 +11,11 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_token_creation()
+    public function test_user_token_creation(): void
     {
         $user = User::factory()->create();
 
-        $this->post(route('user.login'), [
+        $this->postJson(route('user.login'), [
             'email' => $user->email,
             'password' => 'password',
         ])
@@ -30,11 +30,11 @@ class LoginTest extends TestCase
             ]);
     }
 
-    public function test_user_token_creation_with_wrong_email()
+    public function test_user_token_creation_with_wrong_email(): void
     {
         $user = User::factory()->create();
 
-        $this->post(route('user.login'), [
+        $this->postJson(route('user.login'), [
             'email' => 'wrongemail',
             'password' => 'password',
         ])
@@ -48,11 +48,11 @@ class LoginTest extends TestCase
             ]);
     }
 
-    public function test_user_token_creation_with_wrong_password()
+    public function test_user_token_creation_with_wrong_password(): void
     {
         $user = User::factory()->create();
 
-        $this->post(route('user.login'), [
+        $this->postJson(route('user.login'), [
             'email' => $user->email,
             'password' => 'wrongpassword',
         ])
