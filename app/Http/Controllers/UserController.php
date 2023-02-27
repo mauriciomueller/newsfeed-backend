@@ -27,17 +27,7 @@ class UserController extends Controller
 
 
 
-    public function getUser(Request $request): JsonResponse
-    {
-        $userInfo = [];
 
-        $user = $request->user();
-        $userInfo['user'] = $user->toArray();
-        $userInfo['user']['settings']['categories'] = SettingsCategory::all()->toArray();
-        $userInfo['user']['settings']['sources'] = SettingsSource::all()->toArray();
-
-        return $this->sendResponse($userInfo);
-    }
 
     /**
      * Handle an incoming registration request.

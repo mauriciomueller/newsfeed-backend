@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticatedTokenController;
 use App\Http\Controllers\EmailVerificationNotificationController;
+use App\Http\Controllers\GetUserController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\SearchNewsController;
@@ -31,7 +32,7 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
     });
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/user', [userController::class, 'getUser'])->name('user.get');
+        Route::get('/user', GetUserController::class)->name('user.get');
         Route::put('/users', [UserController::class, 'update'])->name('user.update');
         Route::put('/users/change-password', [UserController::class, 'changePassword'])->name('password.change');
         Route::get('/users/news/', [UserNewsController::class, 'getUserNews'])->name('user.news.getUserNews');
