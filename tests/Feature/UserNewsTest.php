@@ -39,7 +39,7 @@ class UserNewsTest extends TestCase
     public function test_get_news_for_not_logged_in_users()
     {
         $this->get(route('user.news.getUserNews'))
-            ->assertStatus(403);
+            ->assertStatus(401);
     }
 
     public function test_get_news_for_logged_in_users_without_categories_settings() {
@@ -59,9 +59,13 @@ class UserNewsTest extends TestCase
 
         $this->get(route('user.news.getUserNews'))
             ->assertJsonStructure([
-                'yourNews' => [
-                    '*' => $this->articles
-                ]
+                'success',
+                'result' => [
+                    'yourNews' => [
+                        '*' => $this->articles
+                    ],
+                ],
+                'message',
             ])
             ->assertStatus(200);
     }
@@ -86,21 +90,25 @@ class UserNewsTest extends TestCase
 
         $this->get(route('user.news.getUserNews'))
             ->assertJsonStructure([
-                'byCategories' => [
-                    'business' => [
-                        'articles' => [
-                            '*' => $this->articles
+                'success',
+                'result' => [
+                    'byCategories' => [
+                        'business' => [
+                            'articles' => [
+                                '*' => $this->articles
+                            ]
+                        ],
+                        'general' => [
+                            'articles' => [
+                                '*' => $this->articles
+                            ]
                         ]
                     ],
-                    'general' => [
-                        'articles' => [
-                            '*' => $this->articles
-                        ]
+                    'yourNews' => [
+                        '*' => $this->articlesWithCategories
                     ]
                 ],
-                'yourNews' => [
-                    '*' => $this->articlesWithCategories
-                ]
+                'message',
             ])
             ->assertStatus(200);
     }

@@ -22,6 +22,10 @@ class RegisterUserTest extends TestCase
         'password_confirmation' => 'password',
     ];
 
+    private array $failResponse = [
+        'success' => false,
+        'message' => 'Error when trying to login.',
+    ];
 
     private string $route = 'user.register';
 
@@ -46,85 +50,94 @@ class RegisterUserTest extends TestCase
     public function test_register_user_first_name_missing()
     {
         $this->userData['first_name'] = '';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'first_name' => ['The first name field is required.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_first_name_invalid()
     {
         $this->userData['first_name'] = 'a';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'first_name' => ['The first name must be at least 3 characters.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_last_name_missing()
     {
         $this->userData['last_name'] = '';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'last_name' => ['The last name field is required.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_last_name_invalid()
     {
         $this->userData['last_name'] = 'a';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'last_name' => ['The last name must be at least 3 characters.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_email_missing()
     {
         $this->userData['email'] = '';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'email' => ['The email field is required.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_email_invalid()
     {
         $this->userData['email'] = 'invalidemail';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'email' => ['The email must be a valid email address.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_password_missing()
     {
         $this->userData['password'] = '';
         $this->userData['password_confirmation'] = '';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'password' => ['The password field is required.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_password_less_then_7_characters()
     {
         $this->userData['password'] = '1234567';
         $this->userData['password_confirmation'] = '1234567';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'password' => ['The password must be at least 8 characters.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
     public function test_register_user_password_confirmation_missing()
     {
         $this->userData['password'] = 'password';
         $this->userData['password_confirmation'] = '';
-
-        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson([
+        $this->failResponse['errors'] = [
             'password' => ['The password confirmation does not match.'],
-        ]);
+        ];
+
+        $this->post(route($this->route), $this->userData)->assertStatus(422)->assertJson($this->failResponse);
     }
 
 }

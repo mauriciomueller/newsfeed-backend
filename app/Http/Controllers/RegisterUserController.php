@@ -13,7 +13,7 @@ class RegisterUserController extends Controller
         $requestValidated = $request->validated();
 
         try {
-            $registeredUser = $registerUserService->registerUser($requestValidated);
+            $registerUserService->registerUser($requestValidated);
             return $this->sendResponse(message: __('User successfully registered.'));
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), code: 500);

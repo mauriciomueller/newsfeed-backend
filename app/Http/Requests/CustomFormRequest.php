@@ -10,6 +10,14 @@ class CustomFormRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
+        throw new HttpResponseException(response()->json(
+                [
+                    'success' => false,
+                    'errors' => $validator->errors(),
+                    'message' => 'Error when trying to login.',
+                ],
+                422
+            )
+        );
     }
 }

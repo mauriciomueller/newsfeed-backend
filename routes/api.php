@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthenticatedTokenController;
+use App\Http\Controllers\CreateAuthenticationTokenController;
+use App\Http\Controllers\DestroyAuthenticationTokenController;
 use App\Http\Controllers\EmailVerificationNotificationController;
 use App\Http\Controllers\GetLoggedUserDataController;
 use App\Http\Controllers\NewPasswordController;
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->middleware('throttle:api')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::post('/users', RegisterUserController::class)->name('user.register');
-        Route::post('/login', [AuthenticatedTokenController::class, 'store'])->name('user.login');
+        Route::post('/users/login', CreateAuthenticationTokenController::class)->name('user.login');
         Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
         Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
     });
@@ -39,8 +40,8 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
         Route::get('/users/news/', [UserNewsController::class, 'getUserNews'])->name('user.news.getUserNews');
         Route::get('/users/categories', [UserSettingsCategoryController::class, 'show'])->name('user.categories.show');
         Route::put('/users/categories', [UserSettingsCategoryController::class, 'update'])->name('user.categories.update');
-        Route::get('/search', [SearchNewsController::class, 'searchNews'])->name('search');
-        Route::post('/logout', [AuthenticatedTokenController::class, 'destroy'])->name('logout');
+        Route::post('/users/logout', DestroyAuthenticationTokenController::class)->name('user.logout');
+        Route::get('/news/search', [SearchNewsController::class, 'searchNews'])->name('news.search');
     });
 
     Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])

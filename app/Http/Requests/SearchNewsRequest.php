@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class SearchNewsRequest extends FormRequest
+class SearchNewsRequest extends CustomFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
