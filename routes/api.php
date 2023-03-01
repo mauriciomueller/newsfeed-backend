@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangeUserPasswordController;
 use App\Http\Controllers\CreateAuthenticationTokenController;
 use App\Http\Controllers\DestroyAuthenticationTokenController;
 use App\Http\Controllers\EmailVerificationNotificationController;
@@ -37,7 +38,7 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/user', GetLoggedUserDataController::class)->name('user.get');
         Route::put('/users', UpdateUserProfileController::class)->name('user.update');
-        Route::put('/users/change-password', [UserController::class, 'changePassword'])->name('password.change');
+        Route::put('/users/change-password', ChangeUserPasswordController::class)->name('user.password.change');
         Route::get('/users/news/', [UserNewsController::class, 'getUserNews'])->name('user.news.getUserNews');
         Route::get('/users/categories', [UserSettingsCategoryController::class, 'show'])->name('user.categories.show');
         Route::put('/users/categories', [UserSettingsCategoryController::class, 'update'])->name('user.categories.update');
