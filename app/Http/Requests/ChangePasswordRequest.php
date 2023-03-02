@@ -35,7 +35,7 @@ class ChangePasswordRequest extends FormRequest
     /**
      * @throws ValidationException
      */
-    public function validatePasswords(string $oldPassword, string $newPassword): void
+    public function validatePasswords(string $oldPassword, string $newPassword)
     {
         if($oldPassword === $newPassword){
             throw ValidationException::withMessages([

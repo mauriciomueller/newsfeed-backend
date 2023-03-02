@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangeUserPasswordController;
 use App\Http\Controllers\CreateAuthenticationTokenController;
 use App\Http\Controllers\DestroyAuthenticationTokenController;
 use App\Http\Controllers\EmailVerificationNotificationController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\UserPasswordResetLinkController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SearchNewsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserNewsController;
+use App\Http\Controllers\GetUserNewsController;
 use App\Http\Controllers\UserSettingsCategoryController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +38,8 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/user', GetLoggedUserDataController::class)->name('user.get');
         Route::put('/users', UpdateUserProfileController::class)->name('user.update');
-        Route::put('/users/change-password', [UserController::class, 'changePassword'])->name('password.change');
-        Route::get('/users/news/', [UserNewsController::class, 'getUserNews'])->name('user.news.getUserNews');
+        Route::put('/users/change-password', ChangeUserPasswordController::class)->name('user.password.change');
+        Route::get('/users/news/', GetUserNewsController::class)->name('user.news.get');
         Route::get('/users/categories', [UserSettingsCategoryController::class, 'show'])->name('user.categories.show');
         Route::put('/users/categories', [UserSettingsCategoryController::class, 'update'])->name('user.categories.update');
         Route::post('/users/logout', DestroyAuthenticationTokenController::class)->name('user.logout');
