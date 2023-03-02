@@ -6,18 +6,13 @@ use App\Services\News\UserNewsService;
 use App\Services\NewsApiOrg\NewsApiException;
 use Illuminate\Http\JsonResponse;
 
-class UserNewsController extends Controller
+class GetUserNewsController extends Controller
 {
-    public function __construct(
-        private UserNewsService $userNewsService
-    ){
-    }
-
-    public function getUserNews(): JsonResponse
+    public function __invoke(UserNewsService $userNewsService): JsonResponse
     {
         try {
             $user = auth('sanctum')->user();
-            $data = $this->userNewsService->getUserNews($user);
+            $data = $userNewsService->getUserNews($user);
 
             return $this->sendResponse($data);
         } catch (NewsApiException $e) {

@@ -1,20 +1,22 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AuthenticationTest extends TestCase
+class CreateAuthenticationTokenTest extends TestCase
 {
     use RefreshDatabase;
+
+    public string $route = 'user.login';
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->postJson(route('login'), [
+        $response = $this->postJson(route($this->route), [
             'email' => $user->email,
             'password' => 'password',
         ])->assertJsonStructure([
@@ -33,7 +35,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->postJson('/login', [
+        $this->postJson($this->route, [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);

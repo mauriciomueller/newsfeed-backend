@@ -14,6 +14,8 @@ class UserNewsTest extends TestCase
     public array $articles;
     public array $articlesWithCategories;
 
+    public string $route = 'user.news.get';
+
     public function setUp(): void
     {
         parent::setUp();
@@ -38,7 +40,7 @@ class UserNewsTest extends TestCase
 
     public function test_get_news_for_not_logged_in_users(): void
     {
-        $this->get(route('user.news.getUserNews'))
+        $this->get(route($this->route))
             ->assertStatus(401);
     }
 
@@ -58,7 +60,7 @@ class UserNewsTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->get(route('user.news.getUserNews'))
+        $this->get(route($this->route))
             ->assertJsonStructure([
                 'success',
                 'result' => [
@@ -90,7 +92,7 @@ class UserNewsTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->get(route('user.news.getUserNews'))
+        $this->get(route($this->route))
             ->assertJsonStructure([
                 'success',
                 'result' => [
