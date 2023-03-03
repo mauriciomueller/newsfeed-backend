@@ -86,7 +86,7 @@ class UpdateUserSettingsCategoryTest extends TestCase
                         'The settings categories codes must be an array.',
                     ],
                 ],
-                'message' => 'Your request have a validation error.',
+                'message' => 'Your request has a validation error.',
             ])->assertStatus(422);
     }
 }

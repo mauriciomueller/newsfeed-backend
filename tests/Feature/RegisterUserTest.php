@@ -24,7 +24,7 @@ class RegisterUserTest extends TestCase
 
     private array $failResponse = [
         'success' => false,
-        'message' => 'Your request have a validation error.',
+        'message' => 'Your request has a validation error.',
     ];
 
     private string $route = 'user.register';

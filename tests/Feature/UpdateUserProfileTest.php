@@ -58,7 +58,7 @@ class UpdateUserProfileTest extends TestCase
                         __('The email field is required.'),
                     ],
                 ],
-                'message' => __('Error when trying to login.')
+                'message' => __('Your request has a validation error.')
             ]);
     }
 
