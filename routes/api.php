@@ -37,21 +37,35 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
     });
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/user', GetLoggedUserDataController::class)->name('user.get');
-        Route::put('/users', UpdateUserProfileController::class)->name('user.update');
-        Route::put('/users/change-password', ChangeUserPasswordController::class)->name('user.password.change');
-        Route::get('/users/news/', GetUserNewsController::class)->name('user.news.get');
-        Route::get('/users/categories', GetUserSettingsCategoryController::class)->name('user.categories.get');
-        Route::put('/users/categories', UpdateUserSettingsCategoryController::class)->name('user.categories.update');
-        Route::post('/users/logout', DestroyAuthenticationTokenController::class)->name('user.logout');
-        Route::get('/news/search', [SearchNewsController::class, 'searchNews'])->name('news.search');
+        Route::get('/user', GetLoggedUserDataController::class)
+            ->name('user.get');
+
+        Route::put('/users', UpdateUserProfileController::class)
+            ->name('user.update');
+
+        Route::put('/users/change-password', ChangeUserPasswordController::class)
+            ->name('user.password.change');
+
+        Route::get('/users/news/', GetUserNewsController::class)
+            ->name('user.news.get');
+
+        Route::get('/users/categories', GetUserSettingsCategoryController::class)
+            ->name('user.categories.get');
+
+        Route::put('/users/categories', UpdateUserSettingsCategoryController::class)
+            ->name('user.categories.update');
+
+        Route::post('/users/logout', DestroyAuthenticationTokenController::class)
+            ->name('user.logout');
+
+        Route::get('/news/search', SearchNewsController::class)
+            ->name('news.search');
+
+        Route::post('/email/verification-notification', EmailVerificationNotificationController::class)
+            ->name('verification.send');
+
+        Route::get('/users/verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->name('verification.verify')
+            ->middleware('signed');
     });
-
-    Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-        ->middleware(['auth', 'signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware(['auth', 'throttle:6,1'])
-        ->name('verification.send');
 });

@@ -9,7 +9,7 @@ use App\Services\News\SearchNewsService;
 class SearchNewsController extends Controller
 {
 
-    public function searchNews(SearchNewsRequest $request, SearchNewsService $searchNewsService)
+    public function __invoke(SearchNewsRequest $request, SearchNewsService $searchNewsService)
     {
         $validated = $request->validated();
         $data = $searchNewsService->searchNews($validated);
