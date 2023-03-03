@@ -3,19 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\RegisterUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Models\SettingsCategory;
-use App\Models\SettingsSource;
-use App\Models\User;
-use App\Services\RegisterUserService;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class ChangeUserPasswordController extends Controller
 {

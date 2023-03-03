@@ -91,7 +91,7 @@ class UserNewsService
      */
     public function getUserNews(User $user): array
     {
-        $categories = json_decode($user->userSettingsCategories->settings_categories_codes);
+        $categories = $user->userSettingsCategories->settings_categories_codes;
         $response = [];
 
         if (count($categories) === 0) {

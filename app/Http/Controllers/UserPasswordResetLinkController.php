@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 
 class UserPasswordResetLinkController extends Controller
 {
