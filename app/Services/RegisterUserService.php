@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\UserSettingsCategory;
 use App\Repositories\UserRepository;
 use App\Repositories\UserSettingsCategoryRepository;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +28,7 @@ class RegisterUserService
             throw new \Exception('Error while creating user.');
         }
 
-        $userSettingsCategories = $this->userSettingsCategoryRepository->create($user);
+        $userSettingsCategories = $this->userSettingsCategoryRepository->create($user->id);
 
         if($userSettingsCategories === null) {
             DB::rollBack();

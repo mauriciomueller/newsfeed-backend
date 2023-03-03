@@ -14,7 +14,7 @@ class RegisterUserController extends Controller
 
         try {
             $registerUserService->registerUser($requestValidated);
-            return $this->sendResponse(message: __('User successfully registered.'));
+            return $this->sendResponse(message: __('User successfully registered.'), code: 201 );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), code: 500);
         }

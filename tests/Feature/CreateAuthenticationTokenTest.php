@@ -26,7 +26,7 @@ class CreateAuthenticationTokenTest extends TestCase
                 'token_type',
             ],
             'message',
-        ])->assertStatus(200);
+        ])->assertStatus(201);
 
         $this->assertAuthenticated();
     }

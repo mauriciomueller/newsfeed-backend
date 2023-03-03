@@ -26,6 +26,6 @@ class CreateAuthenticationTokenController extends Controller
             'token_type' => 'Bearer',
         ];
 
-        return $this->sendResponse($data, 'User ' . $user->full_name . ' successfully logged in');
+        return $this->sendResponse($data, 'User token for ' . $user->full_name . ' successfully created.', 201);
     }
 }
