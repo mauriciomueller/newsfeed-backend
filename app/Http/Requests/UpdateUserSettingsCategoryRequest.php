@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class UserSettingsCategoryUpdateRequest extends CustomFormRequest
+class UpdateUserSettingsCategoryRequest extends CustomFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,13 +17,12 @@ class UserSettingsCategoryUpdateRequest extends CustomFormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array<string>
      */
     public function rules(): array
     {
         return [
-            'settings_categories_codes' => 'required|array',
-            'settings_categories_codes.*' => 'required|string',
+            'settings_categories_codes' => 'array',
         ];
     }
 }

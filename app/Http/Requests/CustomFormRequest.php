@@ -14,7 +14,7 @@ class CustomFormRequest extends FormRequest
                 [
                     'success' => false,
                     'errors' => $validator->errors(),
-                    'message' => 'Error when trying to login.',
+                    'message' => 'Your request have a validation error.',
                 ],
                 422
             )

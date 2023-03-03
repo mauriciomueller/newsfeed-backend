@@ -2,16 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
 use App\Models\UserSettingsCategory;
 
 class UserSettingsCategoryRepository
 {
-    public function create(User $user): UserSettingsCategory
+    public function create(int $userId, string $categories): UserSettingsCategory
     {
-        return $user->userSettingsCategories()->create([
-            'user_id' => $user->id,
-            'settings_categories_codes' => '[]',
+        return UserSettingsCategory::create([
+            'user_id' => $userId,
+            'settings_categories_codes' => $categories,
         ]);
+    }
+
+    public function getCategoriesByUserId(int $userId): UserSettingsCategory
+    {
+        return UserSettingsCategory::where('user_id', $userId)->first();
     }
 }
